@@ -1,0 +1,65 @@
+[project]
+name = "contensis_management"
+version = "0.0.1"
+description = "Contensis Management API"
+authors = [
+    { name = "Joe Collins", email = "j.collins@zengenti.com" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 1 - Planning",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "requests"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "debugpy",
+    "python-dotenv",
+    "ipykernel",
+    "mypy",
+    "pip-tools",
+    "pre-commit",
+    "pytest",
+    "responses",
+    "ruff",
+    "setuptools",
+    "sourcery",
+    "types-requests",  # for type checking.
+]
+
+[tool.setuptools]
+py-modules = [
+    "src",
+    "tests",
+] #  Disable auto discovery of modules (and only include the ones we specifically want).
+
+[tool.setuptools.packages.find]
+where = ["src", "tests"]
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-q --cache-clear"
+testpaths = ["./tests"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+follow_imports = "skip"
+disable_error_code = "import-untyped"
+ignore_missing_imports = true

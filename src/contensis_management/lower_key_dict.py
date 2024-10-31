@@ -1,0 +1,23 @@
+""""""
+
+
+class LowerKeyDict(dict):
+    """A dictionary that stores keys in lowercase."""
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key.casefold(), value)
+
+    def __getitem__(self, key):
+        return super().__getitem__(key.casefold())
+
+
+def to_lower_key_dict(original_dict: dict) -> LowerKeyDict:
+    """Convert a dictionary to a LowerKeyDict."""
+    lower_key_dict = LowerKeyDict()
+    for key, value in original_dict.items():
+        if isinstance(value, dict):
+            # Recursively convert nested dictionaries
+            lower_key_dict[key] = to_lower_key_dict(value)
+        else:
+            lower_key_dict[key] = value
+    return lower_key_dict
