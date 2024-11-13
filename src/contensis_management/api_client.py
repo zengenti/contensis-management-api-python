@@ -1,8 +1,8 @@
-""""""
+"""Contensis API client module."""
 
 import logging
 
-import requests
+from contensis_management import request_handler_abc
 
 LOGGER = logging.getLogger(__name__)
 
@@ -12,7 +12,13 @@ class ApiClient:
 
     BASE_URL = "https://cms-develop.cloud.contensis.com"
 
-    def __init__(self, username, password):
+    def __init__(
+        self,
+        the_handler: request_handler_abc.RequestHandlerABC,
+        username: str,
+        password: str,
+    ):
+        self.the_handler = the_handler
         self.token = self.authenticate(username, password)
 
     def authenticate(self, username, password):
@@ -28,9 +34,4 @@ class ApiClient:
             "username": username,
             "password": password,
         }
-
-        response = requests.post(url, headers=headers, data=data, timeout=10)
-        response.raise_for_status()
-
-        # Assuming token is returned in response.json()["access_token"]
-        return response.json().get("access_token")
+        return self.the_handler.post(url, data, headers)
