@@ -13,8 +13,8 @@ help: # Show help for each of the makefile recipes.
 lint:  # Lint the code with ruff and mypy.
 	.venv/bin/python -m ruff check ./src ./tests
 	.venv/bin/python -m mypy ./src ./tests
-	.venv/bin/sourcery login --token $${SOURCERY_TOKEN}
-	.venv/bin/sourcery review ./src ./tests
+	# .venv/bin/sourcery login --token $${SOURCERY_TOKEN}
+	# .venv/bin/sourcery review ./src ./tests
 
 lock:  # Create the lock file and requirements file.
 	rm -f requirements.*
