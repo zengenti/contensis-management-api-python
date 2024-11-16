@@ -19,15 +19,15 @@ class RequestHandler(request_handler_abc.RequestHandlerABC):
         response = requests.get(url, headers=headers, timeout=self.timeout)
         return api_response.ApiResponse(
             status_code=response.status_code,
-            json_data=response.json(),
             headers=dict(response.headers),
+            json_data=response.json(),
         )
 
-    def post(self, url, json=None, headers=None) -> api_response.ApiResponse:
+    def post(self, url, headers=None, data=None) -> api_response.ApiResponse:
         """Send a POST request to the specified URL with the specified data."""
-        response = requests.post(url, json=json, headers=headers, timeout=self.timeout)
+        response = requests.post(url, headers=headers, data=data, timeout=self.timeout)
         return api_response.ApiResponse(
             status_code=response.status_code,
-            json_data=response.json(),
             headers=dict(response.headers),
+            json_data=response.json(),
         )

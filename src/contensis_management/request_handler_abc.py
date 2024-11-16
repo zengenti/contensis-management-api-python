@@ -12,9 +12,9 @@ class RequestHandlerABC(ABC):
     """Abstract base class for RequestHandler classes."""
 
     @abstractmethod
-    def post(self, url: str, json=None, headers=None) -> api_response.ApiResponse:
-        """Send a POST request to the specified URL."""
-
-    @abstractmethod
     def get(self, url: str, headers=None) -> api_response.ApiResponse:
         """Send a GET request to the specified URL."""
+
+    @abstractmethod
+    def post(self, url: str, headers=None, data=None) -> api_response.ApiResponse:
+        """Send a POST request to the specified URL."""

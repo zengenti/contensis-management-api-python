@@ -1,4 +1,6 @@
-""""""
+"""Confirm that the API client can authenticate and return a token."""
+
+import pytest
 
 from contensis_management import (
     api_client,
@@ -9,12 +11,14 @@ from contensis_management import (
 from tests.helper_config import env_config
 
 
-class MockRequestHandler(request_handler_abc.RequestHandlerABC):
+class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
     """A mock implementation of the RequestHandler class."""
 
-    def post(self, url, json=None, headers=None):
+    def post(self, url, headers=None, data=None):
+        """Return a dummy token that is a plausible length."""
+        mock_token = "a" * 1100
         return api_response.ApiResponse(
-            json_data={"token": "mocked-token"}, status_code=200
+            json_data={"access_token": mock_token}, status_code=200
         )
 
     def get(self, url, headers=None):
@@ -24,7 +28,7 @@ class MockRequestHandler(request_handler_abc.RequestHandlerABC):
 def test_api_client_success() -> None:
     """Confirm that the class can authenticate."""
     # Arrange
-    mock_request_handler = MockRequestHandler()
+    mock_request_handler = MockRequestHandlerSuccessful()
     alias = "dummy-alias"
     username = "dummy-username"
     password = "dummy-password"
@@ -33,17 +37,46 @@ def test_api_client_success() -> None:
     token = client.token
     # Assert
     assert token is not None
+    # and it should be huge.
+    assert len(token) > 1000
+
+
+class MockRequestHandlerFailure(request_handler_abc.RequestHandlerABC):
+    """A mock implementation of the RequestHandler class."""
+
+    def post(self, url, headers=None, data=None):
+        """Return a dummy token that is a plausible length."""
+        return api_response.ApiResponse(
+            json_data={"error": "IncorrectUsernameorPassword"}, status_code=400
+        )
+
+    def get(self, url, headers=None):
+        raise NotImplementedError("This should not have been called.")
 
 
 def test_api_client_failure() -> None:
     """Confirm that the class can authenticate."""
     # Arrange
-    mock_request_handler = request_handler.RequestHandler()
+    mock_request_handler = MockRequestHandlerFailure()
+    alias = "dummy-alias"
+    username = "not-the-username"
+    password = "not-the-password"
+    # Act
+    with pytest.raises(PermissionError) as got_an_error:
+        api_client.ApiClient(mock_request_handler, alias, username, password)
+    # Assert
+    assert got_an_error is not None
+
+
+def test_api_client_for_real() -> None:
+    """Genuine test of the API client for debugging."""
+    # Arrange
     alias = "develop"
     username = env_config.username
     password = env_config.password
-    client = api_client.ApiClient(mock_request_handler, alias, username, password)
+    handler = request_handler.RequestHandler()
     # Act
-    token = client.token
+    client = api_client.ApiClient(handler, alias, username, password)
     # Assert
-    assert token is not None
+    assert client.token is not None
+    assert len(client.token) > 1000

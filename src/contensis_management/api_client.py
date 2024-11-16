@@ -31,10 +31,17 @@ class ApiClient:
         }
         data = {
             "scope": (
-                "openid offline_access Security_Administrator ContentType_Read ContentType_Write ContentType_Delete Entry_Read Entry_Write Entry_Delete Project_Read Project_Write Project_Delete Workflow_Administrator"
+                "openid offline_access Security_Administrator "
+                "ContentType_Read ContentType_Write ContentType_Delete "
+                "Entry_Read Entry_Write Entry_Delete Project_Read Project_Write "
+                "Project_Delete Workflow_Administrator"
             ),
             "grant_type": "contensis_classic",
             "username": username,
             "password": password,
         }
-        return self.the_handler.post(url, data, headers)
+        api_response = self.the_handler.post(url=url, headers=headers, data=data)
+        if api_response.json_data.get("error") or api_response.status_code != 200:
+            LOGGER.error("Error authenticating with the Contensis API.")
+            raise PermissionError(api_response.json_data)
+        return api_response.json_data["access_token"]
