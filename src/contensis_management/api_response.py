@@ -11,5 +11,5 @@ class ApiResponse:
     """A standard response object for API requests."""
 
     status_code: int
-    json_data: dict
     headers: dict = field(default_factory=dict)
+    json_data: dict = field(default_factory=dict)
