@@ -2,7 +2,7 @@
 
 import logging
 
-from contensis_management import request_handler_abc
+from contensis_management import request_handler_abc, projects
 
 LOGGER = logging.getLogger(__name__)
 
@@ -20,9 +20,11 @@ class ApiClient:
         self.the_handler = the_handler
         self.alias = alias
         self.base_url = f"https://cms-{alias}.cloud.contensis.com"
-        self.token = self.authenticate(username, password)
+        self.token = self._authenticate(username, password)
+        # Initialize grouped resources
+        self.projects = projects.Projects(self)
 
-    def authenticate(self, username, password):
+    def _authenticate(self, username, password):
         """Authenticate with the Contensis API and return the token."""
         url = f"{self.base_url}/authenticate/connect/token"
         headers = {
@@ -45,3 +47,8 @@ class ApiClient:
             LOGGER.error("Error authenticating with the Contensis API.")
             raise PermissionError(api_response.json_data)
         return api_response.json_data["access_token"]
+
+    def get(self, url: str):
+        """Send a GET request to the specified URL."""
+        headers = {"Authorization": f"Bearer {self.token}"}
+        return self.the_handler.get(url=f"{self.base_url}{url}", headers=headers)
