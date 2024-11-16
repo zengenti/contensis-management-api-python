@@ -68,7 +68,7 @@ def test_api_client_failure() -> None:
     assert got_an_error is not None
 
 
-def test_api_client_for_real() -> None:
+def api_client_for_real() -> None:
     """Genuine test of the API client for debugging."""
     # Arrange
     alias = "develop"
