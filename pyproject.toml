@@ -2,9 +2,7 @@
 name = "contensis_management"
 version = "0.0.1b"
 description = "Contensis Management API"
-authors = [
-    { name = "Joe Collins", email = "j.collins@zengenti.com" }
-]
+authors = [{ name = "Joe Collins", email = "j.collins@zengenti.com" }]
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -14,9 +12,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-dependencies = [
-    "requests"
-]
+dependencies = ["requests"]
+
 
 [project.optional-dependencies]
 dev = [
@@ -33,8 +30,13 @@ dev = [
     "ruff",
     "setuptools",
     "sourcery",
-    "types-requests",  # for type checking.
+    "types-requests", # for type checking.
 ]
+
+[project.urls]
+"homepage" = "https://github.com/zengenti/contensis-management-api-python"
+"repository" = "https://github.com/zengenti/contensis-management-api-python"
+"documentation" = "https://github.com/zengenti/contensis-management-api-python"
 
 [tool.setuptools]
 py-modules = [
@@ -71,10 +73,4 @@ lint.ignore = ["D203", "D213"]
 lint.fixable = ["ALL"]
 line-length = 88
 target-version = "py312"
-exclude = [
-    ".git",
-    ".pytest_cache",
-    ".venv",
-    ".vscode",
-    "__pycache__",
-]
+exclude = [".git", ".pytest_cache", ".venv", ".vscode", "__pycache__"]

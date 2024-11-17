@@ -15,9 +15,9 @@ class ApiClient:
     def __init__(
         self,
         the_handler: request_handler_abc.RequestHandlerABC,
-        alias: str,
-        username: str,
-        password: str,
+        alias: str = "",
+        username: str = "",
+        password: str = "",
     ):
         """Initialize the API client."""
         self.the_handler = the_handler

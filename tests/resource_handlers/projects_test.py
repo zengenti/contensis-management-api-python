@@ -1,13 +1,13 @@
 """Confirm that the projects resource handler works as expected."""
 
+import http
+
 from contensis_management import (
     api_client,
     api_response,
-    request_handler,
     request_handler_abc,
 )
 from contensis_management.resource_handlers import projects
-from tests.helper_config import env_config
 
 mock_projects_json: list[dict] = [
     {
@@ -54,17 +54,16 @@ class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
 
     def get(self, url, headers=None):
         """Return a list of projects."""
-        return api_response.ApiResponse(json_data=mock_projects_json, status_code=200)
+        return api_response.ApiResponse(
+            json_data=mock_projects_json, status_code=http.HTTPStatus.OK
+        )
 
 
 def test_list_projects() -> None:
     """Test the list projects with a mock resource handler."""
     # Arrange
-    handler = MockRequestHandlerSuccessful()
-    alias = "dummy-alias"
-    username = "dummy-username"
-    password = "dummy-password"
-    client = api_client.ApiClient(handler, alias, username, password)
+    mock_request_handler = MockRequestHandlerSuccessful()
+    client = api_client.ApiClient(mock_request_handler)
     projects_handler = projects.Projects(client)
     # Act
     the_projects = projects_handler.list()
@@ -76,18 +75,3 @@ def test_list_projects() -> None:
     assert the_projects[0].id == "website"
     assert the_projects[0].name == "Website"
     assert "This is the description" in the_projects[0].description
-
-
-def list_projects_for_real() -> None:
-    """Genuine test of the list projects resource handler for debugging."""
-    # Arrange
-    alias = env_config.alias
-    username = env_config.username
-    password = env_config.password
-    handler = request_handler.RequestHandler()
-    client = api_client.ApiClient(handler, alias, username, password)
-    projects_handler = projects.Projects(client)
-    # Act
-    the_projects = projects_handler.list()
-    # Assert
-    assert the_projects is not None

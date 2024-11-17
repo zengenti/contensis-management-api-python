@@ -15,9 +15,11 @@ class Projects:
         """Initialize the Projects class."""
         self.client = the_api_client
 
-    def get(self, project_id: str):
+    def get(self, project_id: str) -> project.Project:
         """Get a project from the Contensis Management API."""
-        return self.client.get(f"/api/management/projects/{project_id}")
+        the_api_response = self.client.get(f"/api/management/projects/{project_id}")
+        the_project_data = the_api_response.json_data
+        return project.Project(**the_project_data)
 
     def list(self) -> List[Any]:
         """Get a list of the projects in the Contensis Management API."""

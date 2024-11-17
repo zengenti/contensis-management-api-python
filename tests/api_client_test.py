@@ -5,10 +5,8 @@ import pytest
 from contensis_management import (
     api_client,
     api_response,
-    request_handler,
     request_handler_abc,
 )
-from tests.helper_config import env_config
 
 
 class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
@@ -30,10 +28,7 @@ def test_api_client_success() -> None:
     """Confirm that the class can authenticate."""
     # Arrange
     mock_request_handler = MockRequestHandlerSuccessful()
-    alias = "dummy-alias"
-    username = "dummy-username"
-    password = "dummy-password"
-    client = api_client.ApiClient(mock_request_handler, alias, username, password)
+    client = api_client.ApiClient(mock_request_handler)
     # # Act
     token = client.token
     # Assert
@@ -61,26 +56,8 @@ def test_api_client_failure() -> None:
     """Confirm that the class can authenticate."""
     # Arrange
     mock_request_handler = MockRequestHandlerFailure()
-    alias = "dummy-alias"
-    username = "not-the-username"
-    password = "not-the-password"
     # Act
     with pytest.raises(PermissionError) as got_an_error:
-        api_client.ApiClient(mock_request_handler, alias, username, password)
+        api_client.ApiClient(mock_request_handler)
     # Assert
     assert got_an_error is not None
-
-
-def api_client_for_real() -> None:
-    """Genuine test of the API client for debugging."""
-    # Arrange
-    alias = env_config.alias
-    username = env_config.username
-    password = env_config.password
-    handler = request_handler.RequestHandler()
-    # Act
-    client = api_client.ApiClient(handler, alias, username, password)
-    # Assert
-    assert client.token is not None
-    a_big_number = 1000  # Tokens seem to be about 1125 characters long.
-    assert len(client.token) > a_big_number
