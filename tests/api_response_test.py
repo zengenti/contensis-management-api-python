@@ -1,5 +1,7 @@
 """Just confirm that the dataclass has the expected properties."""
 
+import http
+
 from contensis_management import api_response
 
 
@@ -12,6 +14,6 @@ def test_api_response():
         headers={"header": "value"},
     )
     # Assert
-    assert response.status_code == 200
+    assert response.status_code == http.HTTPStatus.OK
     assert response.json_data == {"key": "value"}
     assert response.headers == {"header": "value"}

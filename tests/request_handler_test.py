@@ -5,6 +5,8 @@ point we are using responses.  The RequestHandler class should be a dependency o
 ApiClient class so a mock RequestHandler can be passed in for testing.
 """
 
+import http
+
 import responses
 
 from contensis_management import api_response, request_handler
@@ -22,7 +24,7 @@ def test_get_request() -> None:
     response = handler.get(url=url)
     # Assert
     assert isinstance(response, api_response.ApiResponse)
-    assert response.status_code == 200
+    assert response.status_code == http.HTTPStatus.OK
     assert response.json_data == {"ok": True, "msg": "Hello, world!"}
 
 
@@ -39,5 +41,5 @@ def test_post_request() -> None:
     response = handler.post(url, headers=headers)
     # Assert
     assert isinstance(response, api_response.ApiResponse)
-    assert response.status_code == 200
+    assert response.status_code == http.HTTPStatus.OK
     assert response.json_data == data

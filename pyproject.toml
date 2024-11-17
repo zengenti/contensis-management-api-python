@@ -63,3 +63,17 @@ warn_unused_configs = true
 follow_imports = "skip"
 disable_error_code = "import-untyped"
 ignore_missing_imports = true
+
+[tool.ruff]
+lint.select = ["F", "E", "W", "C90", "I", "PL", "D"]
+lint.ignore = ["D203", "D213"]
+lint.fixable = ["ALL"]
+line-length = 88
+target-version = "py312"
+exclude = [
+    ".git",
+    ".pytest_cache",
+    ".venv",
+    ".vscode",
+    "__pycache__",
+]

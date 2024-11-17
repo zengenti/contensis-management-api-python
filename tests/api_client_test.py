@@ -22,6 +22,7 @@ class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
         )
 
     def get(self, url, headers=None):
+        """Do nothing."""
         raise NotImplementedError("This should not have been called.")
 
 
@@ -38,7 +39,8 @@ def test_api_client_success() -> None:
     # Assert
     assert token is not None
     # and it should be huge.
-    assert len(token) > 1000
+    a_big_number = 1000  # Tokens seem to be about 1125 characters long.
+    assert len(token) > a_big_number
 
 
 class MockRequestHandlerFailure(request_handler_abc.RequestHandlerABC):
@@ -51,6 +53,7 @@ class MockRequestHandlerFailure(request_handler_abc.RequestHandlerABC):
         )
 
     def get(self, url, headers=None):
+        """Do nothing."""
         raise NotImplementedError("This should not have been called.")
 
 
@@ -79,4 +82,5 @@ def api_client_for_real() -> None:
     client = api_client.ApiClient(handler, alias, username, password)
     # Assert
     assert client.token is not None
-    assert len(client.token) > 1000
+    a_big_number = 1000  # Tokens seem to be about 1125 characters long.
+    assert len(client.token) > a_big_number

@@ -9,11 +9,11 @@ class EnvConfig:
     """Access environment variables for testing purposes."""
 
     def __init__(self):
-        # Load .env file if it exists
+        """Load .env file if it exists."""
         load_dotenv()
 
     def _get(self, key, default=None):
-        # Prioritize environment variables over .env
+        """Prioritize environment variables over .env."""
         return os.environ.get(key) or os.getenv(key) or default
 
     @property

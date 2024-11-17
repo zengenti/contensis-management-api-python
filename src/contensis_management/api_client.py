@@ -1,8 +1,10 @@
 """Contensis API client module."""
 
+import http
 import logging
 
-from contensis_management import request_handler_abc, projects
+from contensis_management import request_handler_abc
+from contensis_management.resource_handlers import projects
 
 LOGGER = logging.getLogger(__name__)
 
@@ -17,6 +19,7 @@ class ApiClient:
         username: str,
         password: str,
     ):
+        """Initialize the API client."""
         self.the_handler = the_handler
         self.alias = alias
         self.base_url = f"https://cms-{alias}.cloud.contensis.com"
@@ -43,7 +46,10 @@ class ApiClient:
             "password": password,
         }
         api_response = self.the_handler.post(url=url, headers=headers, data=data)
-        if api_response.json_data.get("error") or api_response.status_code != 200:
+        if (
+            api_response.json_data.get("error")
+            or api_response.status_code != http.HTTPStatus.OK
+        ):
             LOGGER.error("Error authenticating with the Contensis API.")
             raise PermissionError(api_response.json_data)
         return api_response.json_data["access_token"]

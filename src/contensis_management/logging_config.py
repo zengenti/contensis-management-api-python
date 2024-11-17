@@ -1,9 +1,10 @@
-""""""
+"""Configure logging for the Contensis Management API."""
 
 import logging
 
 
 def configure_logging(level=logging.DEBUG):
+    """Configure logging for the Contensis Management API."""
     # Set up the root logger with handlers, formatters, etc.
     logger = logging.getLogger()
     logger.setLevel(level)

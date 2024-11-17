@@ -1,13 +1,15 @@
-""""""
+"""A dictionary that stores keys in lowercase."""
 
 
 class LowerKeyDict(dict):
     """A dictionary that stores keys in lowercase."""
 
     def __setitem__(self, key, value):
+        """Set the key to lowercase."""
         super().__setitem__(key.casefold(), value)
 
     def __getitem__(self, key):
+        """Get the value for the key in lowercase."""
         return super().__getitem__(key.casefold())
 
 
