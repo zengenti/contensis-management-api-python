@@ -1,36 +1,29 @@
 """Allow access to environment variables for testing purposes."""
 
 import os
+from dataclasses import dataclass, field
 
 from dotenv import load_dotenv
 
 
+@dataclass
 class EnvConfig:
     """Access environment variables for testing purposes."""
 
-    def __init__(self):
-        """Load .env file if it exists."""
+    alias: str = field(init=False)
+    username: str = field(init=False)
+    password: str = field(init=False)
+
+    def __post_init__(self):
+        """Load .env file and set fields."""
         load_dotenv()
+        self.alias = self._get("ALIAS")
+        self.username = self._get("USERNAME")
+        self.password = self._get("PASSWORD")
 
     def _get(self, key, default=None):
         """Prioritize environment variables over .env."""
         return os.environ.get(key) or os.getenv(key) or default
-
-    @property
-    def alias(self):
-        """Return the alias for the Contensis API."""
-        return self._get("ALIAS")
-
-
-    @property
-    def username(self):
-        """Return the username for the Contensis API."""
-        return self._get("USERNAME")
-
-    @property
-    def password(self):
-        """Return the password for the Contensis API."""
-        return self._get("PASSWORD")
 
 
 # Create a singleton instance
