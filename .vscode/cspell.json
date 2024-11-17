@@ -17,6 +17,7 @@
         "pylance",
         "Sourcery",
         "tamasfe",
-        "venv"
+        "venv",
+        "zenql"
     ]
 }

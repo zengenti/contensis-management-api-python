@@ -4,7 +4,7 @@ import http
 import logging
 
 from contensis_management import api_response, request_handler_abc
-from contensis_management.resource_handlers import projects
+from contensis_management.resource_handlers import projects, users
 
 LOGGER = logging.getLogger(__name__)
 
@@ -26,6 +26,7 @@ class ApiClient:
         self.token = self._authenticate(username, password)
         # Initialize grouped resources
         self.projects = projects.Projects(self)
+        self.users = users.Users(self)
 
     def _authenticate(self, username, password):
         """Authenticate with the Contensis API and return the token."""
