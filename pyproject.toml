@@ -27,6 +27,7 @@ dev = [
     "mypy",
     "pip-tools",
     "pre-commit",
+    "pydantic",
     "pytest",
     "responses",
     "ruff",

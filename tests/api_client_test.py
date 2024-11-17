@@ -18,7 +18,7 @@ class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
         """Return a dummy token that is a plausible length."""
         mock_token = "a" * 1100
         return api_response.ApiResponse(
-            json_data={"access_token": mock_token}, status_code=200
+            status_code=200, json_data={"access_token": mock_token}
         )
 
     def get(self, url, headers=None):
@@ -74,7 +74,7 @@ def test_api_client_failure() -> None:
 def api_client_for_real() -> None:
     """Genuine test of the API client for debugging."""
     # Arrange
-    alias = "develop"
+    alias = env_config.alias
     username = env_config.username
     password = env_config.password
     handler = request_handler.RequestHandler()

@@ -13,6 +13,8 @@
         "gpsg",
         "levelname",
         "mypy",
+        "pydantic",
+        "pylance",
         "Sourcery",
         "tamasfe",
         "venv"

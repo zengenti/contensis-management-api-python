@@ -1,9 +1,7 @@
 {
     "recommendations": [
         "charliermarsh.ruff",
-        "charliermarsh.ruff",
         "ms-vscode.makefile-tools",
-        "ms-python.black-formatter",
         "ms-python.mypy-type-checker",
         "ms-python.python",
         "python.vscode-pylance",

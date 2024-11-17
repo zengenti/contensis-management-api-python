@@ -17,6 +17,12 @@ class EnvConfig:
         return os.environ.get(key) or os.getenv(key) or default
 
     @property
+    def alias(self):
+        """Return the alias for the Contensis API."""
+        return self._get("ALIAS")
+
+
+    @property
     def username(self):
         """Return the username for the Contensis API."""
         return self._get("USERNAME")
