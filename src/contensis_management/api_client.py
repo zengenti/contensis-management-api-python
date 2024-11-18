@@ -10,7 +10,11 @@ LOGGER = logging.getLogger(__name__)
 
 
 class ApiClient:
-    """A class to authenticate with the Contensis API."""
+    """A class to authenticate with the Contensis API.
+
+    It is instantiated with a RequestHandler object so that the request handler can be
+    replaced during testing.
+    """
 
     def __init__(
         self,
@@ -56,7 +60,13 @@ class ApiClient:
         return the_api_response.json_data["access_token"]
 
     def get(self, url: str) -> api_response_abc.ApiResponseAbc:
-        """Send a GET request to the specified URL."""
+        """Send a GET request to the specified URL via that provided RequestHandler."""
         headers = {"Authorization": f"Bearer {self.token}"}
         url = f"{self.base_url}{url}"
         return self.the_handler.get(url=url, headers=headers)
+
+    def head(self, url: str) -> api_response_abc.ApiResponseAbc:
+        """Send a HEAD request to the specified URL via that provided RequestHandler."""
+        headers = {"Authorization": f"Bearer {self.token}"}
+        url = f"{self.base_url}{url}"
+        return self.the_handler.head(url=url, headers=headers)

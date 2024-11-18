@@ -10,7 +10,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class RequestHandler(request_handler_abc.RequestHandlerABC):
-    """A class to handle requests to the Contensis API."""
+    """A class to handle requests to the Contensis API using the `requests` library."""
 
     timeout = 10
 
@@ -22,4 +22,9 @@ class RequestHandler(request_handler_abc.RequestHandlerABC):
     def post(self, url, headers=None, data=None) -> api_response.ApiResponse:
         """Send a POST request to the specified URL with the specified data."""
         response = requests.post(url, headers=headers, data=data, timeout=self.timeout)
+        return api_response.ApiResponse(response)
+
+    def head(self, url, headers=None) -> api_response.ApiResponse:
+        """Send a HEAD request to the specified URL."""
+        response = requests.head(url, headers=headers, timeout=self.timeout)
         return api_response.ApiResponse(response)

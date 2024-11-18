@@ -23,6 +23,10 @@ class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
         """Do nothing."""
         raise NotImplementedError("This should not have been called.")
 
+    def head(self, url, headers=None):
+        """Return a list of users."""
+        raise NotImplementedError("Not implemented")
+
 
 def test_api_client_success() -> None:
     """Confirm that the class can authenticate."""
@@ -50,6 +54,10 @@ class MockRequestHandlerFailure(request_handler_abc.RequestHandlerABC):
     def get(self, url, headers=None):
         """Do nothing."""
         raise NotImplementedError("This should not have been called.")
+
+    def head(self, url, headers=None):
+        """Return a list of users."""
+        raise NotImplementedError("Not implemented")
 
 
 def test_api_client_failure() -> None:

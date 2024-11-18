@@ -1,5 +1,6 @@
 """User methods for the Contensis Security API."""
 
+import http
 from typing import TYPE_CHECKING, Any, List
 
 from contensis_management.models import user
@@ -29,8 +30,15 @@ class Users:
         the_user_list = the_api_response.json_data["items"]
         return [user.User(**item) for item in the_user_list]
 
-    def permissions(self, user_id: str, group_names: str):
-        """Get a list of the permissions for a user from the Contensis Security API."""
+    def is_in_groups(self, user_id: str, group_names: str) -> bool:
+        """Is the user in these groups.
+
+        No content should be returned, only the status code.  If the user is in the
+        group(s) the status code will be 204 (success but no content).
+        """
         url = f"/api/security/users/{user_id}/groups/{group_names}"
-        the_api_response = self.client.get(url=url)
-        return the_api_response.json_data
+        the_api_response = self.client.head(url=url)
+        return (
+            the_api_response.status_code == http.HTTPStatus.NO_CONTENT
+            and not the_api_response.json_data
+        )

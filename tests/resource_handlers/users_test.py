@@ -115,6 +115,10 @@ class MockRequestHandlerAllUsers(request_handler_abc.RequestHandlerABC):
             json_data=mock_paged_users_json, status_code=http.HTTPStatus.OK
         )
 
+    def head(self, url, headers=None):
+        """Return a list of users."""
+        raise NotImplementedError("Not implemented")
+
 
 def test_list_users() -> None:
     """Test the list users with a mock resource handler."""
@@ -144,6 +148,10 @@ class MockRequestHandlerOneUser(request_handler_abc.RequestHandlerABC):
             json_data=mock_users_json[0], status_code=http.HTTPStatus.OK
         )
 
+    def head(self, url, headers=None):
+        """Return a list of users."""
+        raise NotImplementedError("Not implemented")
+
 
 def test_get_user() -> None:
     """Test the get user with a mock resource handler."""
@@ -157,3 +165,18 @@ def test_get_user() -> None:
     assert the_user.username == "user-alice"
     assert the_user.first_name == "Alice"
     assert the_user.last_name == "Wonderland"
+
+
+def test_get_user_permissions() -> None:
+    """Confirm the user permissions method works as expected."""
+    from contensis_management import request_handler
+    from tests.helpers.helper_config import env_config
+
+    alias = env_config.alias
+    username = env_config.username
+    password = env_config.password
+    handler = request_handler.RequestHandler()
+    client = api_client.ApiClient(handler, alias, username, password)
+    group_names = "SSL Certificate Administrators,System Administrators"
+    permissions = client.users.is_in_groups(user_id="@current", group_names=group_names)
+    assert permissions

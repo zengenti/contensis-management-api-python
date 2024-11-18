@@ -20,3 +20,7 @@ class RequestHandlerABC(ABC):
         self, url: str, headers=None, data=None
     ) -> api_response_abc.ApiResponseAbc:
         """Send a POST request to the specified URL."""
+
+    @abstractmethod
+    def head(self, url: str, headers=None) -> api_response_abc.ApiResponseAbc:
+        """Send a HEAD request to the specified URL."""

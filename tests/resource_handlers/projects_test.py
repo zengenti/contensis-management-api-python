@@ -58,6 +58,10 @@ class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
             status_code=http.HTTPStatus.OK, json_data=mock_projects_json
         )
 
+    def head(self, url, headers=None):
+        """Return a list of users."""
+        raise NotImplementedError("Not implemented")
+
 
 def test_list_projects() -> None:
     """Test the list projects with a mock resource handler."""
