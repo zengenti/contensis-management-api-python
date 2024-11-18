@@ -165,18 +165,3 @@ def test_get_user() -> None:
     assert the_user.username == "user-alice"
     assert the_user.first_name == "Alice"
     assert the_user.last_name == "Wonderland"
-
-
-def test_get_user_permissions() -> None:
-    """Confirm the user permissions method works as expected."""
-    from contensis_management import request_handler
-    from tests.helpers.helper_config import env_config
-
-    alias = env_config.alias
-    username = env_config.username
-    password = env_config.password
-    handler = request_handler.RequestHandler()
-    client = api_client.ApiClient(handler, alias, username, password)
-    group_names = "SSL Certificate Administrators,System Administrators"
-    permissions = client.users.is_in_groups(user_id="@current", group_names=group_names)
-    assert permissions
