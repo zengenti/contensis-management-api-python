@@ -34,12 +34,12 @@ class User(camel_case.CamelModel):
     username: str
     first_name: str | None = None
     last_name: str | None = None
-    email: str
-    timezone: str
-    language: str
+    email: str | None = None
+    timezone: str | None = None
+    language: str | None = None
     custom: dict = {}
-    credentials: Credentials
-    status: Status
+    credentials: Credentials | None = None
+    status: Status | None = None
     created: datetime | None = None
     last_login: datetime | None = None
     last_failed_login: datetime | None = None
@@ -47,6 +47,6 @@ class User(camel_case.CamelModel):
     expiry: datetime | None = None
     password_changed: datetime | None = None
     opt_out_of_notifications: bool
-    failed_login_attempts: int
-    failed_login_attempts_since_last_success: int
-    successful_login_attempts: int
+    failed_login_attempts: int | None = None
+    failed_login_attempts_since_last_success: int | None = None
+    successful_login_attempts: int | None = None
