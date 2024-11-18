@@ -12,7 +12,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-dependencies = ["requests"]
+dependencies = ["httpx", "requests"]
 
 
 [project.optional-dependencies]

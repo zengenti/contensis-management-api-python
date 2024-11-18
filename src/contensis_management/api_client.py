@@ -3,7 +3,7 @@
 import http
 import logging
 
-from contensis_management import api_response, request_handler_abc
+from contensis_management import api_response_abc, request_handler_abc
 from contensis_management.resource_handlers import projects, users
 
 LOGGER = logging.getLogger(__name__)
@@ -55,14 +55,8 @@ class ApiClient:
             raise PermissionError(the_api_response.json_data)
         return the_api_response.json_data["access_token"]
 
-    def get(self, url: str) -> api_response.ApiResponse:
+    def get(self, url: str) -> api_response_abc.ApiResponseAbc:
         """Send a GET request to the specified URL."""
         headers = {"Authorization": f"Bearer {self.token}"}
-        the_api_response = self.the_handler.get(
-            url=f"{self.base_url}{url}", headers=headers
-        )
-        return api_response.ApiResponse(
-            status_code=the_api_response.status_code,
-            headers=the_api_response.headers,
-            json_data=the_api_response.json_data,
-        )
+        url = f"{self.base_url}{url}"
+        return self.the_handler.get(url=url, headers=headers)

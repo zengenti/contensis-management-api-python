@@ -4,9 +4,9 @@ import pytest
 
 from contensis_management import (
     api_client,
-    api_response,
     request_handler_abc,
 )
+from tests.helpers import mock_api_response
 
 
 class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
@@ -15,7 +15,7 @@ class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
     def post(self, url, headers=None, data=None):
         """Return a dummy token that is a plausible length."""
         mock_token = "a" * 1100
-        return api_response.ApiResponse(
+        return mock_api_response.MockApiResponse(
             status_code=200, json_data={"access_token": mock_token}
         )
 
@@ -43,7 +43,7 @@ class MockRequestHandlerFailure(request_handler_abc.RequestHandlerABC):
 
     def post(self, url, headers=None, data=None):
         """Return a dummy token that is a plausible length."""
-        return api_response.ApiResponse(
+        return mock_api_response.MockApiResponse(
             json_data={"error": "IncorrectUsernameorPassword"}, status_code=400
         )
 

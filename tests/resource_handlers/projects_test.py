@@ -4,10 +4,10 @@ import http
 
 from contensis_management import (
     api_client,
-    api_response,
     request_handler_abc,
 )
 from contensis_management.resource_handlers import projects
+from tests.helpers import mock_api_response
 
 mock_projects_json: list[dict] = [
     {
@@ -48,14 +48,14 @@ class MockRequestHandlerSuccessful(request_handler_abc.RequestHandlerABC):
 
     def post(self, url, headers=None, data=None):
         """Return a dummy token that is a plausible length."""
-        return api_response.ApiResponse(
+        return mock_api_response.MockApiResponse(
             status_code=200, json_data={"access_token": "mock_token"}
         )
 
     def get(self, url, headers=None):
         """Return a list of projects."""
-        return api_response.ApiResponse(
-            json_data=mock_projects_json, status_code=http.HTTPStatus.OK
+        return mock_api_response.MockApiResponse(
+            status_code=http.HTTPStatus.OK, json_data=mock_projects_json
         )
 
 

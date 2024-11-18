@@ -1,14 +1,14 @@
-"""Just confirm that the dataclass has the expected properties."""
+"""Just confirm that the mock api response works."""
 
 import http
 
-from contensis_management import api_response
+from tests.helpers import mock_api_response
 
 
 def test_api_response():
     """Make sure the ApiResponse dataclass has the expected properties."""
     # Act
-    response = api_response.ApiResponse(
+    response = mock_api_response.MockApiResponse(
         status_code=200,
         json_data={"key": "value"},
         headers={"header": "value"},

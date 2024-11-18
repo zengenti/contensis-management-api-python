@@ -1,5 +1,7 @@
 """A dictionary that stores keys in lowercase."""
 
+from typing import Any
+
 
 class LowerKeyDict(dict):
     """A dictionary that stores keys in lowercase."""
@@ -13,7 +15,7 @@ class LowerKeyDict(dict):
         return super().__getitem__(key.casefold())
 
 
-def to_lower_key_dict(original_dict: dict) -> LowerKeyDict:
+def to_lower_key_dict(original_dict: Any) -> LowerKeyDict:
     """Convert a dictionary to a LowerKeyDict."""
     lower_key_dict = LowerKeyDict()
     for key, value in original_dict.items():

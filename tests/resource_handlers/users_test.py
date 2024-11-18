@@ -4,10 +4,10 @@ import http
 
 from contensis_management import (
     api_client,
-    api_response,
     request_handler_abc,
 )
 from contensis_management.resource_handlers import users
+from tests.helpers import mock_api_response
 
 mock_users_json: list[dict] = [
     {
@@ -105,13 +105,13 @@ class MockRequestHandlerAllUsers(request_handler_abc.RequestHandlerABC):
 
     def post(self, url, headers=None, data=None):
         """Return a dummy token when we authenticate."""
-        return api_response.ApiResponse(
+        return mock_api_response.MockApiResponse(
             status_code=200, json_data={"access_token": "mock_token"}
         )
 
     def get(self, url, headers=None):
         """Return a list of users."""
-        return api_response.ApiResponse(
+        return mock_api_response.MockApiResponse(
             json_data=mock_paged_users_json, status_code=http.HTTPStatus.OK
         )
 
@@ -134,13 +134,13 @@ class MockRequestHandlerOneUser(request_handler_abc.RequestHandlerABC):
 
     def post(self, url, headers=None, data=None):
         """Return a dummy token when we need to authenticate."""
-        return api_response.ApiResponse(
+        return mock_api_response.MockApiResponse(
             status_code=200, json_data={"access_token": "mock_token"}
         )
 
     def get(self, url, headers=None):
         """Return a one user."""
-        return api_response.ApiResponse(
+        return mock_api_response.MockApiResponse(
             json_data=mock_users_json[0], status_code=http.HTTPStatus.OK
         )
 

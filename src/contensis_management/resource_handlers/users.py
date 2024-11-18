@@ -28,3 +28,9 @@ class Users:
         the_api_response = self.client.get(url=url)
         the_user_list = the_api_response.json_data["items"]
         return [user.User(**item) for item in the_user_list]
+
+    def permissions(self, user_id: str, group_names: str):
+        """Get a list of the permissions for a user from the Contensis Security API."""
+        url = f"/api/security/users/{user_id}/groups/{group_names}"
+        the_api_response = self.client.get(url=url)
+        return the_api_response.json_data
