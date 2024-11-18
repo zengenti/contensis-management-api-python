@@ -32,8 +32,8 @@ class User(camel_case.CamelModel):
 
     id: str
     username: str
-    first_name: str
-    last_name: str
+    first_name: str | None = None
+    last_name: str | None = None
     email: str
     timezone: str
     language: str

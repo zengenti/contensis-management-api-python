@@ -15,9 +15,12 @@ class Users:
         """Initialize the Users class."""
         self.client = the_api_client
 
-    def get(self, user_id: str):
-        """Get a user from the Contensis Security API."""
-        return self.client.get(f"/api/management/users/{user_id}")
+    def get(self, user_id: str) -> user.User:
+        """Get a single user from the Contensis Security API."""
+        url = f"/api/security/users/{user_id}"
+        the_api_response = self.client.get(url=url)
+        the_user = the_api_response.json_data
+        return user.User(**the_user)
 
     def list(self) -> List[Any]:
         """Get a list of the users from the Contensis Security API."""
