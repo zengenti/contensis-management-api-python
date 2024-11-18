@@ -22,15 +22,12 @@ dev = [
     "python-dotenv",
     "ipykernel",
     "mypy",
-    "pip-tools",
     "pre-commit",
     "pydantic",
     "pytest",
-    "responses",
     "ruff",
-    "setuptools",
     "sourcery",
-    "types-requests", # for type checking.
+    "types-requests",
 ]
 
 [project.urls]

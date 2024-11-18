@@ -10,8 +10,6 @@ asttokens==2.4.1
     # via stack-data
 black==24.10.0
     # via contensis-management (pyproject.toml)
-build==1.2.2.post1
-    # via pip-tools
 certifi==2024.8.30
     # via
     #   httpcore
@@ -22,9 +20,7 @@ cfgv==3.4.0
 charset-normalizer==3.4.0
     # via requests
 click==8.1.7
-    # via
-    #   black
-    #   pip-tools
+    # via black
 comm==0.2.2
     # via ipykernel
 debugpy==1.8.8
@@ -83,7 +79,6 @@ nodeenv==1.9.1
 packaging==24.2
     # via
     #   black
-    #   build
     #   ipykernel
     #   pytest
 parso==0.8.4
@@ -92,10 +87,6 @@ pathspec==0.12.1
     # via black
 pexpect==4.9.0
     # via ipython
-pip==24.3.1
-    # via pip-tools
-pip-tools==7.4.1
-    # via contensis-management (pyproject.toml)
 platformdirs==4.3.6
     # via
     #   black
@@ -119,10 +110,6 @@ pydantic-core==2.23.4
     # via pydantic
 pygments==2.18.0
     # via ipython
-pyproject-hooks==1.2.0
-    # via
-    #   build
-    #   pip-tools
 pytest==8.3.3
     # via contensis-management (pyproject.toml)
 python-dateutil==2.9.0.post0
@@ -130,25 +117,15 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
     # via contensis-management (pyproject.toml)
 pyyaml==6.0.2
-    # via
-    #   pre-commit
-    #   responses
+    # via pre-commit
 pyzmq==26.2.0
     # via
     #   ipykernel
     #   jupyter-client
 requests==2.32.3
-    # via
-    #   contensis-management (pyproject.toml)
-    #   responses
-responses==0.25.3
     # via contensis-management (pyproject.toml)
 ruff==0.7.4
     # via contensis-management (pyproject.toml)
-setuptools==75.5.0
-    # via
-    #   contensis-management (pyproject.toml)
-    #   pip-tools
 six==1.16.0
     # via
     #   asttokens
@@ -183,11 +160,8 @@ typing-extensions==4.12.2
 urllib3==2.2.3
     # via
     #   requests
-    #   responses
     #   types-requests
 virtualenv==20.27.1
     # via pre-commit
 wcwidth==0.2.13
     # via prompt-toolkit
-wheel==0.45.0
-    # via pip-tools
