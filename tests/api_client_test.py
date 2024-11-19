@@ -32,14 +32,41 @@ def test_api_client_success() -> None:
     """Confirm that the class can authenticate."""
     # Arrange
     mock_request_handler = MockRequestHandlerSuccessful()
+    # Act
     client = api_client.ApiClient(mock_request_handler)
-    # # Act
-    token = client.token
     # Assert
+    token = client.token
     assert token is not None
     # and it should be huge.
     a_big_number = 1000  # Tokens seem to be about 1125 characters long.
     assert len(token) > a_big_number
+
+
+def test_api_client_from_credentials() -> None:
+    """Confirm that you can create a client from credentials."""
+    # Arrange
+    mock_request_handler = MockRequestHandlerSuccessful()
+    # Act
+    client = api_client.ApiClient.from_credentials(
+        mock_request_handler, "dummy-alias", "dummy-user", "dummy-password"
+    )
+    # Assert
+    token = client.token
+    assert token is not None
+
+
+def test_api_client_from_token() -> None:
+    """Confirm that you can create a client from a token."""
+    # Arrange
+    mock_request_handler = MockRequestHandlerSuccessful()
+    dummy_token = "the-token-that-was-passed-in"
+    # Act
+    client = api_client.ApiClient.from_token(
+        handler=mock_request_handler, alias="dummy-alias", token=dummy_token
+    )
+    # Assert
+    token = client.token
+    assert token == dummy_token
 
 
 class MockRequestHandlerFailure(request_handler_abc.RequestHandlerABC):

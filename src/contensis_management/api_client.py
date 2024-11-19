@@ -18,13 +18,19 @@ class ApiClient:
 
     def __init__(
         self,
-        the_handler: request_handler_abc.RequestHandlerABC,
+        handler: request_handler_abc.RequestHandlerABC,
         alias: str = "",
         username: str = "",
         password: str = "",
     ):
-        """Initialize the API client."""
-        self.the_handler = the_handler
+        """Initialize the API client.
+
+        Really the alias, username and password should be required since it doesn't make
+        sense to create an instance of the API client without them.  However, making
+        them optional allows the class to be instantiated for tests with just the
+        request handler.
+        """
+        self.handler = handler
         self.alias = alias
         self.base_url = f"https://cms-{alias}.cloud.contensis.com"
         self.token = self._authenticate(username, password)
@@ -50,7 +56,7 @@ class ApiClient:
             "username": username,
             "password": password,
         }
-        the_api_response = self.the_handler.post(url=url, headers=headers, data=data)
+        the_api_response = self.handler.post(url=url, headers=headers, data=data)
         if (
             the_api_response.json_data.get("error")
             or the_api_response.status_code != http.HTTPStatus.OK
@@ -59,14 +65,51 @@ class ApiClient:
             raise PermissionError(the_api_response.json_data)
         return the_api_response.json_data["access_token"]
 
+    @classmethod
+    def from_credentials(
+        cls,
+        handler: request_handler_abc.RequestHandlerABC,
+        alias: str,
+        username: str,
+        password: str,
+    ):
+        """Create an instance of the API client using credentials (=factory method).
+
+        This is really just a proxy for the constructor, so not strictly necessary.
+        However, I thought it was needed so there was a reciprocal for the from_token
+        method.
+        """
+        return cls(
+            handler=handler,
+            alias=alias,
+            username=username,
+            password=password,
+        )
+
+    @classmethod
+    def from_token(
+        cls, handler: request_handler_abc.RequestHandlerABC, alias: str, token: str
+    ):
+        """Create an instance of the API client using a token (=factory method).
+
+        I know this seems like hard work, but it is done this way so that using the
+        credentials is the default way to create an instance of the API client.  Using
+        a token is a special case mainly for working the other Contensis clients.
+        """
+        instance = cls.__new__(cls)  # Bypass __init__
+        instance.handler = handler
+        instance.alias = alias
+        instance.token = token
+        return instance
+
     def get(self, url: str) -> api_response_abc.ApiResponseAbc:
         """Send a GET request to the specified URL via that provided RequestHandler."""
         headers = {"Authorization": f"Bearer {self.token}"}
         url = f"{self.base_url}{url}"
-        return self.the_handler.get(url=url, headers=headers)
+        return self.handler.get(url=url, headers=headers)
 
     def head(self, url: str) -> api_response_abc.ApiResponseAbc:
         """Send a HEAD request to the specified URL via that provided RequestHandler."""
         headers = {"Authorization": f"Bearer {self.token}"}
         url = f"{self.base_url}{url}"
-        return self.the_handler.head(url=url, headers=headers)
+        return self.handler.head(url=url, headers=headers)
