@@ -34,9 +34,7 @@ class ApiClient:
         self.alias = alias
         self.base_url = f"https://cms-{alias}.cloud.contensis.com"
         self.token = self._authenticate(username, password)
-        # Initialize grouped resources
-        self.projects = projects.Projects(self)
-        self.users = users.Users(self)
+        self._initialize_resources()
 
     def _authenticate(self, username, password):
         """Authenticate with the Contensis API and return the token."""
@@ -64,6 +62,11 @@ class ApiClient:
             LOGGER.error("Error authenticating with the Contensis API.")
             raise PermissionError(the_api_response.json_data)
         return the_api_response.json_data["access_token"]
+
+    def _initialize_resources(self):
+        """Initialize the grouped resources with the API client."""
+        self.projects = projects.Projects(self)
+        self.users = users.Users(self)
 
     @classmethod
     def from_credentials(
@@ -100,6 +103,8 @@ class ApiClient:
         instance.handler = handler
         instance.alias = alias
         instance.token = token
+        instance.base_url = f"https://cms-{alias}.cloud.contensis.com"
+        instance._initialize_resources()
         return instance
 
     def get(self, url: str) -> api_response_abc.ApiResponseAbc:
