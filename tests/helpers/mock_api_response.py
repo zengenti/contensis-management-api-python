@@ -8,9 +8,12 @@ from contensis_management import api_response_abc
 class MockApiResponse(api_response_abc.ApiResponseAbc):
     """An implementation of the ApiResponseAbc for testing."""
 
-    def __init__(self, status_code: int,
-                 headers: dict|None = None,
-                 json_data: Dict[str, Any]|None = None):
+    def __init__(
+        self,
+        status_code: int,
+        headers: dict | None = None,
+        json_data: Dict[str, Any] | None = None,
+    ):
         """Initialize the mock ApiResponse class with whatever junk it is given."""
         if headers is None:
             headers = {}
