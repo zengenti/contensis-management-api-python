@@ -2,19 +2,36 @@
 
 ## Overview
 
-The Management API Python Client
-provides a convenient and efficient way to interact with Contensis,
-enabling you to create, update, and manage content effortlessly.
-It offers the flexibility to import content either as part of a one-off migration or
-as a scheduled task,
-making it ideal for bulk operations or integration with external systems.
-While primarily designed for use outside a website context,
-the API is versatile enough to be used within website projects when needed.
+The Management API Python Client is an early-stage project
+designed to simplify interactions with the Contensis Management API.
+This software provides tools for creating, updating, and managing content programmatically.
+It can support workflows such as:
+
+* Content migration: Import content in bulk,
+  whether for one-off migrations or recurring scheduled tasks.
+* Integration: Connect with external systems for content operations.
+
+While the client is intended for use outside a website context,
+it may also be adapted for use within web projects if necessary.
+
+## ⚠️ Important Notice
+
+This software is incomplete and still under development. 
+It should be considered unreliable and is not ready for production use.
+Bugs and missing functionality are likely.
+Use with caution in experimental or non-critical environments.
 
 ## How It Works
 
-The Python Management Client API acts as a wrapper around the core HTTP services,
-handling the complexities of security and data parsing for you.
-It allows developers to integrate with Contensis
-without needing to manage raw HTTP requests,
-streamlining the process of content management.
+The Management API Python Client simplifies integration with the Contensis Management API
+by acting as a wrapper around the core HTTP services.
+Key features include:
+
+* Security Handling: Manages authentication and token handling.
+* Data Parsing: Simplifies working with API responses by automating common parsing tasks.
+* Abstraction: Eliminates the need for direct management of raw HTTP requests,
+  making development faster and more efficient.
+
+This client is intended to reduce the complexity of building and
+maintaining integrations with Contensis,
+but its current state may not yet meet all your needs or expectations.
