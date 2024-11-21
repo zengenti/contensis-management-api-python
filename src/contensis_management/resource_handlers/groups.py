@@ -21,7 +21,7 @@ class Groups:
         the_group_list = the_api_response.json_data["items"]
         return [group.Group(**item) for item in the_group_list]
 
-    def get(self, group_identifier: str) -> group.Group:
+    def get(self, group_identifier: str) -> List[Any]:
         """Get the users in a group."""
         the_api_response = self.client.get(
             f"/api/security/groups/{group_identifier}/users"
