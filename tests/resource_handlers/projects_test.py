@@ -67,7 +67,7 @@ def test_list_projects() -> None:
     """Test the list projects with a mock resource handler."""
     # Arrange
     mock_request_handler = MockRequestHandlerSuccessful()
-    client = api_client.ApiClient(mock_request_handler)
+    client = api_client.ApiClient(handler=mock_request_handler)
     projects_handler = projects.Projects(client)
     # Act
     the_projects = projects_handler.list()

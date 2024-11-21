@@ -124,7 +124,7 @@ def test_list_users() -> None:
     """Test the list users with a mock resource handler."""
     # Arrange
     mock_request_handler = MockRequestHandlerAllUsers()
-    client = api_client.ApiClient(mock_request_handler)
+    client = api_client.ApiClient(handler=mock_request_handler)
     users_handler = users.Users(client)
     # Act
     the_users = users_handler.list()
@@ -157,7 +157,7 @@ def test_get_user() -> None:
     """Test the get user with a mock resource handler."""
     # Arrange
     mock_request_handler = MockRequestHandlerOneUser()
-    client = api_client.ApiClient(mock_request_handler)
+    client = api_client.ApiClient(handler=mock_request_handler)
     users_handler = users.Users(client)
     # Act
     the_user = users_handler.get(user_id="209e4053-f71b-45a9-ba87-3f5595caaeee")

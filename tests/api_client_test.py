@@ -33,7 +33,7 @@ def test_api_client_success() -> None:
     # Arrange
     mock_request_handler = MockRequestHandlerSuccessful()
     # Act
-    client = api_client.ApiClient(mock_request_handler)
+    client = api_client.ApiClient(handler=mock_request_handler)
     # Assert
     token = client.token
     assert token is not None
@@ -48,7 +48,7 @@ def test_api_client_from_credentials() -> None:
     mock_request_handler = MockRequestHandlerSuccessful()
     # Act
     client = api_client.ApiClient.from_credentials(
-        mock_request_handler, "dummy-alias", "dummy-user", "dummy-password"
+        "dummy-alias", "dummy-user", "dummy-password", mock_request_handler
     )
     # Assert
     token = client.token
@@ -93,6 +93,6 @@ def test_api_client_failure() -> None:
     mock_request_handler = MockRequestHandlerFailure()
     # Act
     with pytest.raises(PermissionError) as got_an_error:
-        api_client.ApiClient(mock_request_handler)
+        api_client.ApiClient(handler=mock_request_handler)
     # Assert
     assert got_an_error is not None

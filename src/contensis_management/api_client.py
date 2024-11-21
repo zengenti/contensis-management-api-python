@@ -3,7 +3,11 @@
 import http
 import logging
 
-from contensis_management import api_response_abc, request_handler_abc
+from contensis_management import (
+    api_response_abc,
+    request_handler,
+    request_handler_abc,
+)
 from contensis_management.resource_handlers import projects, users
 
 LOGGER = logging.getLogger(__name__)
@@ -16,19 +20,22 @@ class ApiClient:
     replaced during testing.
     """
 
+    # fmt: off
     def __init__(
         self,
-        handler: request_handler_abc.RequestHandlerABC,
         alias: str = "",
         username: str = "",
         password: str = "",
-    ):
+        handler: request_handler_abc.RequestHandlerABC
+            = request_handler.RequestHandler(),
+    ):  # fmt: on
         """Initialize the API client.
 
         Really the alias, username and password should be required since it doesn't make
         sense to create an instance of the API client without them.  However, making
-        them optional allows the class to be instantiated for tests with just the
-        request handler.
+        them optional allows the class to be instantiated in the factory methods and in
+        the tests.  Potentially you could instantiate the class in a 'bad' state, but
+        that that is your problem.
         """
         self.handler = handler
         self.alias = alias
@@ -71,10 +78,10 @@ class ApiClient:
     @classmethod
     def from_credentials(
         cls,
-        handler: request_handler_abc.RequestHandlerABC,
         alias: str,
         username: str,
         password: str,
+        handler: request_handler_abc.RequestHandlerABC,
     ):
         """Create an instance of the API client using credentials (=factory method).
 
@@ -83,15 +90,18 @@ class ApiClient:
         method.
         """
         return cls(
-            handler=handler,
             alias=alias,
             username=username,
             password=password,
+            handler=handler,
         )
 
     @classmethod
     def from_token(
-        cls, handler: request_handler_abc.RequestHandlerABC, alias: str, token: str
+        cls,
+        alias: str,
+        token: str,
+        handler: request_handler_abc.RequestHandlerABC,
     ):
         """Create an instance of the API client using a token (=factory method).
 

@@ -1,46 +1,46 @@
 {
-    "python.testing.pytestEnabled": true,
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestArgs": [
-        "tests"
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff": "always"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true
+    },
+    "editor.detectIndentation": true,
+    "editor.minimap.enabled": false,
+    "editor.rulers": [
+        88
     ],
     "files.exclude": {
         "**/*.pyc": {
             "when": "$(basename).py"
         },
-        "**/__pycache__": true,
-        "**/.pytest_cache": true
+        "**/.pytest_cache": true,
+        "**/__pycache__": true
     },
-    "editor.detectIndentation": true,
-    "python.languageServer": "Pylance",
-    "editor.minimap.enabled": false,
-    "python.defaultInterpreterPath": ".venv/bin/python",
-    "python.terminal.activateEnvironment": true,
-    "terminal.integrated.shellIntegration.enabled": true,
-    "terminal.integrated.profiles.linux": {
-        "bash": {
-            "path": "bash",
-            "args": [
-                "-l"
-            ]
-        }
-    },
-    "terminal.integrated.defaultProfile.linux": "bash",
-    "editor.rulers": [
-        88
+    "git.autofetch": true,
+    "python.analysis.extraPaths": [
+        "./"
     ],
     "python.autoComplete.extraPaths": [
         "./"
     ],
-    "python.analysis.extraPaths": [
-        "./"
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    "python.languageServer": "Pylance",
+    "python.terminal.activateEnvironment": true,
+    "python.testing.pytestArgs": [
+        "tests"
     ],
-    "[python]": {
-        "editor.defaultFormatter": "charliermarsh.ruff",
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports.ruff": "explicit"
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "args": [
+                "-l"
+            ],
+            "path": "bash"
         }
     },
-    "git.autofetch": true
+    "terminal.integrated.shellIntegration.enabled": true
 }
