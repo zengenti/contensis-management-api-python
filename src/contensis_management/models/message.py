@@ -3,7 +3,7 @@
 from contensis_management.models import camel_case
 
 
-class ContensisException(camel_case.CamelModel):
+class Message(camel_case.CamelModel):
     """A Contensis style message from the endpoint."""
 
     status_code: int

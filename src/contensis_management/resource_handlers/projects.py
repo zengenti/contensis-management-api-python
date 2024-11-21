@@ -3,7 +3,7 @@
 import http
 from typing import TYPE_CHECKING, Any, List
 
-from contensis_management.models import contensis_exception, project
+from contensis_management.models import message, project
 
 if TYPE_CHECKING:  # to avoid circular imports.
     from contensis_management import api_client
@@ -30,7 +30,7 @@ class Projects:
 
     def check_my_permissions(
         self, project_id: str, resource_type: str, action: str
-    ) -> contensis_exception.ContensisException:
+    ) -> message.Message:
         """Check if the user is allowed to perform that action using Contensis API."""
         url = (
             f"/api/management/projects/{project_id}"
@@ -38,7 +38,7 @@ class Projects:
             f"/actions/{action}"
         )
         the_api_response = self.client.get(url=url)
-        return contensis_exception.ContensisException(
+        return message.Message(
             status_code=the_api_response.status_code, detail=the_api_response.json_data
         )
 

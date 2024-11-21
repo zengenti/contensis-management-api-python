@@ -8,7 +8,7 @@ from contensis_management import (
     request_handler,
     request_handler_abc,
 )
-from contensis_management.resource_handlers import projects, users
+from contensis_management.resource_handlers import groups, projects, users
 
 LOGGER = logging.getLogger(__name__)
 
@@ -73,6 +73,7 @@ class ApiClient:
 
     def _initialize_resources(self):
         """Initialize the grouped resources with the API client."""
+        self.groups = groups.Groups(self)
         self.projects = projects.Projects(self)
         self.users = users.Users(self)
 
