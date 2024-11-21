@@ -1,5 +1,6 @@
 """Project methods for the Contensis Management API."""
 
+import http
 from typing import TYPE_CHECKING, Any, List
 
 from contensis_management.models import message, project
@@ -27,7 +28,7 @@ class Projects:
         the_project_list = the_api_response.json_data
         return [project.Project(**item) for item in the_project_list]
 
-    def is_allowed(
+    def check_my_permissions(
         self, project_id: str, resource_type: str, action: str
     ) -> message.Message:
         """Check if the user is allowed to perform that action using Contensis API."""
@@ -40,3 +41,8 @@ class Projects:
         return message.Message(
             status_code=the_api_response.status_code, detail=the_api_response.json_data
         )
+
+    def is_allowed(self, project_id: str, resource_type: str, action: str) -> bool:
+        """Is the user allowed to perform that action using Contensis API."""
+        the_message = self.check_my_permissions(project_id, resource_type, action)
+        return int(the_message.status_code) == http.HTTPStatus.OK
