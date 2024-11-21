@@ -1,5 +1,6 @@
 {
     "recommendations": [
+        "anweber.vscode-httpyac",
         "charliermarsh.ruff",
         "ms-vscode.makefile-tools",
         "ms-python.black-formatter",
