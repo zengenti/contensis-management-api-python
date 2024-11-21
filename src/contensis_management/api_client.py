@@ -28,7 +28,7 @@ class ApiClient:
         password: str = "",
         handler: request_handler_abc.RequestHandlerABC
             = request_handler.RequestHandler(),
-    ):  # fmt: on
+    ):
         """Initialize the API client.
 
         Really the alias, username and password should be required since it doesn't make
@@ -42,6 +42,7 @@ class ApiClient:
         self.base_url = f"https://cms-{alias}.cloud.contensis.com"
         self.token = self._authenticate(username, password)
         self._initialize_resources()
+    # fmt: on
 
     def _authenticate(self, username, password):
         """Authenticate with the Contensis API and return the token."""
@@ -75,13 +76,15 @@ class ApiClient:
         self.projects = projects.Projects(self)
         self.users = users.Users(self)
 
+    # fmt: off
     @classmethod
     def from_credentials(
         cls,
         alias: str,
         username: str,
         password: str,
-        handler: request_handler_abc.RequestHandlerABC,
+        handler: request_handler_abc.RequestHandlerABC
+            = request_handler.RequestHandler(),
     ):
         """Create an instance of the API client using credentials (=factory method).
 
@@ -95,13 +98,16 @@ class ApiClient:
             password=password,
             handler=handler,
         )
+    # fmt: on
 
+    # fmt: off
     @classmethod
     def from_token(
         cls,
         alias: str,
         token: str,
-        handler: request_handler_abc.RequestHandlerABC,
+        handler: request_handler_abc.RequestHandlerABC
+            = request_handler.RequestHandler(),
     ):
         """Create an instance of the API client using a token (=factory method).
 
@@ -116,6 +122,7 @@ class ApiClient:
         instance.base_url = f"https://cms-{alias}.cloud.contensis.com"
         instance._initialize_resources()
         return instance
+    # fmt: on
 
     def get(self, url: str) -> api_response_abc.ApiResponseAbc:
         """Send a GET request to the specified URL via that provided RequestHandler."""
