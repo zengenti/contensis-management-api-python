@@ -3,7 +3,7 @@
 import http
 from typing import TYPE_CHECKING, Any, List
 
-from contensis_management.models import message, user
+from contensis_management.models import contensis_exception, user
 
 if TYPE_CHECKING:  # to avoid circular imports.
     from contensis_management import api_client
@@ -30,15 +30,17 @@ class Users:
         the_user_list = the_api_response.json_data["items"]
         return [user.User(**item) for item in the_user_list]
 
-    def check_user_groups(self, user_id: str, group_names: str) -> message.Message:
+    def check_user_groups(
+        self, user_id: str, group_names: str
+    ) -> contensis_exception.ContensisException:
         """Check if the user has permission to perform the action."""
         url = f"/api/security/users/{user_id}/permissions/{group_names}"
         the_api_response = self.client.get(url=url)
-        return message.Message(
+        return contensis_exception.ContensisException(
             status_code=the_api_response.status_code, detail=the_api_response.json_data
         )
 
     def is_in_groups(self, user_id: str, group_names: str) -> bool:
         """Is the user in these groups."""
-        the_message = self.check_user_groups(user_id, group_names)
-        return int(the_message.status_code) == http.HTTPStatus.NO_CONTENT
+        the_exception = self.check_user_groups(user_id, group_names)
+        return int(the_exception.status_code) == http.HTTPStatus.NO_CONTENT
