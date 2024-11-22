@@ -3,7 +3,7 @@ name: Run the Python Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   run_python_tests:
