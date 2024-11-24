@@ -27,6 +27,7 @@ lock:  # Create the lock file and requirements file.
 report:  # Report the python version and pip list.
 	.venv/bin/python --version
 	.venv/bin/python -m pip list -v
+	.venv/bin/pytest --cov=contensis_management
 
 test:  # Run tests.
 	.venv/bin/python -m pytest ./tests --verbose --color=yes

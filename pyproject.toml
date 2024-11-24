@@ -25,6 +25,7 @@ dev = [
     "pre-commit",
     "pydantic",
     "pytest",
+    "pytest-cov",
     "ruff",
     "sourcery",
     "types-requests",
