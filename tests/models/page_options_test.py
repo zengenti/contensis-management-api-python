@@ -1,7 +1,7 @@
 """Confirm that the PageOptions model works as expected."""
 
-
 from contensis_management.models import page_options
+
 
 def test_page_options():
     """Test the PageOptions model."""
